@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * The MIT License (MIT)
  *
@@ -31,7 +29,6 @@ class AlgorithmManagerFactoryTest extends TestCase
      * @var null|AlgorithmManagerFactory
      */
     private $algorithmManagerFactory;
-
     /**
      * @test
      */
@@ -40,7 +37,6 @@ class AlgorithmManagerFactoryTest extends TestCase
         static::assertEquals(['foo'], $this->getAlgorithmManagerFactory()->aliases());
         static::assertEquals(['foo'], array_keys($this->getAlgorithmManagerFactory()->all()));
     }
-
     /**
      * @test
      */
@@ -48,17 +44,14 @@ class AlgorithmManagerFactoryTest extends TestCase
     {
         static::assertInstanceOf(AlgorithmManager::class, $this->getAlgorithmManagerFactory()->create(['foo']));
     }
-
     /**
      * @test
      */
     public function iCannotCreateAnAlgorithmManagerWithABadArgument()
     {
         $this->expectException(\TypeError::class);
-
         new AlgorithmManager(['foo']);
     }
-
     /**
      * @test
      */
@@ -66,23 +59,19 @@ class AlgorithmManagerFactoryTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('The algorithm "HS384" is not supported.');
-
         $manager = new AlgorithmManager([new FooAlgorithm()]);
-
         static::assertEquals(['foo'], $manager->list());
         static::assertTrue($manager->has('foo'));
         static::assertFalse($manager->has('HS384'));
         static::assertInstanceOf(Algorithm::class, $manager->get('foo'));
         $manager->get('HS384');
     }
-
-    private function getAlgorithmManagerFactory(): AlgorithmManagerFactory
+    private function getAlgorithmManagerFactory()
     {
         if (null === $this->algorithmManagerFactory) {
             $this->algorithmManagerFactory = new AlgorithmManagerFactory();
             $this->algorithmManagerFactory->add('foo', new FooAlgorithm());
         }
-
         return $this->algorithmManagerFactory;
     }
 }

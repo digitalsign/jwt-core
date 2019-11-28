@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * The MIT License (MIT)
  *
@@ -21,7 +19,7 @@ use Jose\Component\Core\JWK;
  */
 class KeyChecker
 {
-    public static function checkKeyUsage(JWK $key, string $usage): void
+    public static function checkKeyUsage(JWK $key, $usage)
     {
         if ($key->has('use')) {
             self::checkUsage($key, $usage);
@@ -30,8 +28,7 @@ class KeyChecker
             self::checkOperation($key, $usage);
         }
     }
-
-    public static function checkKeyAlgorithm(JWK $key, string $algorithm): void
+    public static function checkKeyAlgorithm(JWK $key, $algorithm)
     {
         if (!$key->has('alg')) {
             return;
@@ -40,8 +37,7 @@ class KeyChecker
             throw new InvalidArgumentException(sprintf('Key is only allowed for algorithm "%s".', $key->get('alg')));
         }
     }
-
-    private static function checkOperation(JWK $key, string $usage): void
+    private static function checkOperation(JWK $key, $usage)
     {
         $ops = $key->get('key_ops');
         if (!\is_array($ops)) {
@@ -52,32 +48,27 @@ class KeyChecker
                 if (!\in_array('verify', $ops, true)) {
                     throw new InvalidArgumentException('Key cannot be used to verify a signature');
                 }
-
                 break;
             case 'signature':
                 if (!\in_array('sign', $ops, true)) {
                     throw new InvalidArgumentException('Key cannot be used to sign');
                 }
-
                 break;
             case 'encryption':
                 if (!\in_array('encrypt', $ops, true) && !\in_array('wrapKey', $ops, true) && !\in_array('deriveKey', $ops, true)) {
                     throw new InvalidArgumentException('Key cannot be used to encrypt');
                 }
-
                 break;
             case 'decryption':
                 if (!\in_array('decrypt', $ops, true) && !\in_array('unwrapKey', $ops, true) && !\in_array('deriveBits', $ops, true)) {
                     throw new InvalidArgumentException('Key cannot be used to decrypt');
                 }
-
                 break;
             default:
                 throw new InvalidArgumentException('Unsupported key usage.');
         }
     }
-
-    private static function checkUsage(JWK $key, string $usage): void
+    private static function checkUsage(JWK $key, $usage)
     {
         $use = $key->get('use');
         switch ($usage) {
@@ -86,14 +77,12 @@ class KeyChecker
                 if ('sig' !== $use) {
                     throw new InvalidArgumentException('Key cannot be used to sign or verify a signature.');
                 }
-
                 break;
             case 'encryption':
             case 'decryption':
                 if ('enc' !== $use) {
                     throw new InvalidArgumentException('Key cannot be used to encrypt or decrypt.');
                 }
-
                 break;
             default:
                 throw new InvalidArgumentException('Unsupported key usage.');

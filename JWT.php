@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * The MIT License (MIT)
  *
@@ -19,5 +17,5 @@ interface JWT
      * Returns the payload of the JWT.
      * null is a valid payload (e.g. JWS with detached payload).
      */
-    public function getPayload(): ?string;
+    public function getPayload();
 }

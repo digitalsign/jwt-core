@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * The MIT License (MIT)
  *
@@ -17,12 +15,11 @@ use Jose\Component\Core\Algorithm;
 
 class FooAlgorithm implements Algorithm
 {
-    public function name(): string
+    public function name()
     {
         return 'foo';
     }
-
-    public function allowedKeyTypes(): array
+    public function allowedKeyTypes()
     {
         return ['FOO'];
     }

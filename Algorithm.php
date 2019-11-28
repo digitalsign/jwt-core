@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * The MIT License (MIT)
  *
@@ -18,12 +16,11 @@ interface Algorithm
     /**
      * Returns the name of the algorithm.
      */
-    public function name(): string;
-
+    public function name();
     /**
      * Returns the key types suitable for this algorithm (e.g. "oct", "RSA"...).
      *
      * @return string[]
      */
-    public function allowedKeyTypes(): array;
+    public function allowedKeyTypes();
 }

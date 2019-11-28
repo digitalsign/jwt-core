@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * The MIT License (MIT)
  *
@@ -21,7 +19,7 @@ final class JsonConverter
     /**
      * @param mixed $payload
      */
-    public static function encode($payload): string
+    public static function encode($payload)
     {
         try {
             return json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
@@ -29,11 +27,10 @@ final class JsonConverter
             throw new RuntimeException('Invalid content.', $throwable->getCode(), $throwable);
         }
     }
-
     /**
      * @return mixed
      */
-    public static function decode(string $payload)
+    public static function decode($payload)
     {
         try {
             return json_decode($payload, true, 512, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);

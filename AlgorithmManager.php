@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * The MIT License (MIT)
  *
@@ -21,7 +19,6 @@ class AlgorithmManager
      * @var array
      */
     private $algorithms = [];
-
     /**
      * @param Algorithm[] $algorithms
      */
@@ -31,45 +28,40 @@ class AlgorithmManager
             $this->add($algorithm);
         }
     }
-
     /**
      * Returns true if the algorithm is supported.
      *
      * @param string $algorithm The algorithm
      */
-    public function has(string $algorithm): bool
+    public function has($algorithm)
     {
         return \array_key_exists($algorithm, $this->algorithms);
     }
-
     /**
      * Returns the list of names of supported algorithms.
      *
      * @return string[]
      */
-    public function list(): array
+    public function list()
     {
         return array_keys($this->algorithms);
     }
-
     /**
      * Returns the algorithm if supported, otherwise throw an exception.
      *
      * @param string $algorithm The algorithm
      */
-    public function get(string $algorithm): Algorithm
+    public function get($algorithm)
     {
         if (!$this->has($algorithm)) {
             throw new InvalidArgumentException(sprintf('The algorithm "%s" is not supported.', $algorithm));
         }
-
         return $this->algorithms[$algorithm];
     }
-
     /**
      * Adds an algorithm to the manager.
      */
-    private function add(Algorithm $algorithm): void
+    private function add(Algorithm $algorithm)
     {
         $name = $algorithm->name();
         $this->algorithms[$name] = $algorithm;

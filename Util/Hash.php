@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * The MIT License (MIT)
  *
@@ -24,79 +22,68 @@ class Hash
      * @var string
      */
     private $hash;
-
     /**
      * DER encoding T.
      *
      * @var string
      */
     private $t;
-
     /**
      * Hash Length.
      *
      * @var int
      */
     private $length;
-
-    private function __construct(string $hash, int $length, string $t)
+    private function __construct($hash, $length, $t)
     {
         $this->hash = $hash;
         $this->length = $length;
         $this->t = $t;
     }
-
     /**
      * @return Hash
      */
-    public static function sha1(): self
+    public static function sha1()
     {
-        return new self('sha1', 20, "\x30\x21\x30\x09\x06\x05\x2b\x0e\x03\x02\x1a\x05\x00\x04\x14");
+        return new self('sha1', 20, "0!0\t\6\5+\16\3\2\32\5\0\4\24");
     }
-
     /**
      * @return Hash
      */
-    public static function sha256(): self
+    public static function sha256()
     {
-        return new self('sha256', 32, "\x30\x31\x30\x0d\x06\x09\x60\x86\x48\x01\x65\x03\x04\x02\x01\x05\x00\x04\x20");
+        return new self('sha256', 32, "010\r\6\t`�H\1e\3\4\2\1\5\0\4 ");
     }
-
     /**
      * @return Hash
      */
-    public static function sha384(): self
+    public static function sha384()
     {
-        return new self('sha384', 48, "\x30\x41\x30\x0d\x06\x09\x60\x86\x48\x01\x65\x03\x04\x02\x02\x05\x00\x04\x30");
+        return new self('sha384', 48, "0A0\r\6\t`�H\1e\3\4\2\2\5\0\0040");
     }
-
     /**
      * @return Hash
      */
-    public static function sha512(): self
+    public static function sha512()
     {
-        return new self('sha512', 64, "\x30\x51\x30\x0d\x06\x09\x60\x86\x48\x01\x65\x03\x04\x02\x03\x05\x00\x04\x40");
+        return new self('sha512', 64, "0Q0\r\6\t`�H\1e\3\4\2\3\5\0\4@");
     }
-
-    public function getLength(): int
+    public function getLength()
     {
         return $this->length;
     }
-
     /**
      * Compute the HMAC.
      */
-    public function hash(string $text): string
+    public function hash($text)
     {
         return hash($this->hash, $text, true);
     }
-
-    public function name(): string
+    public function name()
     {
         return $this->hash;
     }
-
-    public function t(): string
+    public function t()
     {
         return $this->t;
     }
